@@ -106,8 +106,8 @@ class ReasoningChat(object):
             st.error(f"Response Error:\n\n{e}")
 
 @st.cache_resource
-def init_client(api_key: str, url: str) -> ReasoningChat:
-    client = ReasoningChat(api_key=api_key, url=url)
+def init_client(api_key: str, url: str, model: str) -> ReasoningChat:
+    client = ReasoningChat(api_key=api_key, url=url, model=model)
     return client
 
 @st.fragment
@@ -127,7 +127,7 @@ def display_conversation(a_session: List, r_session: List) -> None:
 
 def main() -> None:
     api_key, url, model = get_chat_param()
-    client = ReasoningChat(api_key=api_key, url=url, model=model)
+    client = init_client(api_key=api_key, url=url, model=model)
     headers: Dict[str, str] = client.init_headers()
 
     if "a_content" not in st.session_state:
