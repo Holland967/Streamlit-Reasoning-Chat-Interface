@@ -40,10 +40,10 @@ class ReasoningChat(object):
         max_tokens: int,
         temperature: float,
         top_p: float,
-        top_k: int,
-        url: str,
-        headers: Dict
+        top_k: int
     ) -> None:
+        headers: Dict = self.init_headers()
+        
         a_session.append({"role": "user", "content": query})
         with st.chat_message("user"):
             st.markdown(query)
@@ -70,7 +70,7 @@ class ReasoningChat(object):
             a_placeholder = st.empty()
         
         try:
-            response = requests.request("POST", url, headers=headers, json=payload, stream=True)
+            response = requests.request("POST", self.url, headers=headers, json=payload, stream=True)
             if response.status_code == 200:
                 for chunk in response.iter_lines():
                     if not chunk:
@@ -162,9 +162,7 @@ def main() -> None:
                 max_tokens=max_tokens,
                 temperature=temperature,
                 top_p=top_p,
-                top_k=top_k,
-                url=url,
-                headers=headers
+                top_k=top_k
             )
         else:
             client.chat_response(
@@ -175,9 +173,7 @@ def main() -> None:
                 max_tokens=max_tokens,
                 temperature=temperature,
                 top_p=top_p,
-                top_k=top_k,
-                url=url,
-                headers=headers
+                top_k=top_k
             )
 
 if __name__ == "__main__":
