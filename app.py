@@ -21,12 +21,11 @@ class ReasoningChat(object):
         self.url: str = url
         self.model: str = model
     
-    @st.cache_data
-    def init_headers(_self) -> Dict[str, str]:
+    def init_headers(self) -> Dict[str, str]:
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Authorization": f"Bearer {_self.api_key}"
+            "Authorization": f"Bearer {self.api_key}"
         }
         return headers
     
